@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import pandas as pd
 import numpy as np
@@ -15,7 +16,7 @@ class EnergyForecast:
         
         if file_extension == 'csv':
             self.data = pd.read_csv(file_path, sep = ';')
-            self.data['electricity_generation'] = self.data['electricity_generation'].str.replase(',', '.').astupe(float) 
+            self.data['electricity_generation'] = self.data['electricity_generation'].str.replace(',', '.').astype(float) 
             self.data = self.data.dropna(subset = ['electricity_generation'])   #Pandas df.dropna () — это встроенный метод DataFrame, которая используется для удаления строк и столбцов со значениями Null/None/NaN из DataFrame в Python.
         
         elif file_extension == 'xlsx':
@@ -42,15 +43,15 @@ class EnergyForecast:
             
     def plot_forecast(self): #построение фигуры графика
         if self.forecast is not None:
-            fig = Figure(figsize = (6, 6))
-            ax = fig.add.subplot(111)
+            figure = plt.figure(figsize = (6, 6))
+            ax = figure.add_subplot(1,1,1)
             ax.plot(self.data['year'], self.data['electricity_generation'], label = 'Исходные данные')
             ax.plot(self.forecast['year'], self.forecast['forecast'], label = 'Прогноз')
             ax.set_xlabel('Год')
             ax.set_ylabel('Потребление энегргии')
             ax.legend()
             
-            self.canvas.future = fig
+            self.canvas.future = figure
             self.canvas.draw()
         
         else:
