@@ -55,7 +55,7 @@ class EnergyForecast:
             self.canvas.draw()
         
         else:
-            print("Ошибкаю Прогноз не сделан.")
+            print("Ошибка. Прогноз не сделан.")
             
             
             
