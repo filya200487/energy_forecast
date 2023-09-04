@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
@@ -30,9 +29,9 @@ class EnergyForecast:
     def make_forecast(self, years):  #параметры для графика
         if self.data is not None:
             X = self.data['year'].values.reshape(-1,1)
-            Y = self.data['electricity_generation'].values
+            y = self.data['electricity_generation'].values
             model = RandomForestRegressor(n_estimators=100, random_state=0) #параметр n_estimators определяет количество деревьев в случайном лесу.
-            model.fit(X, Y) #Подгонка модели 
+            model.fit(X, y) #Подгонка модели 
             
             future_years = np.arange(self.data['year'].max() +1, self.data['year'].max() + 1 + years)
             forecast = model.predict(future_years.reshape(-1, 1)) #прогноз
@@ -50,13 +49,12 @@ class EnergyForecast:
             ax.set_xlabel('Год')
             ax.set_ylabel('Потребление энегргии')
             ax.legend()
-            
+                       
             self.canvas.future = figure
             self.canvas.draw()
         
         else:
             print("Ошибка. Прогноз не сделан.")
-            
             
             
         
